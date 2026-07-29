@@ -1,38 +1,38 @@
 ---
-emoji: 📝
-name: Update GitHub Info
-description: Update the GitHub info page from the latest GitHub Blog and Changelog posts.
+name: update-github-info
+description: Draft website updates for Mona's GitHub Info site from official GitHub sources.
 on:
-  schedule: daily
-  workflow_dispatch:
-permissions:
-  contents: read
-strict: true
-tools:
-  edit: true
-  web-fetch: {}
+workflow_dispatch:
+schedule:
+   - cron: '17 9 * * *'
 safe-outputs:
-  create-pull-request:
-    title-prefix: "[github-info] "
-    draft: false
-    allowed-files:
-      - "site/content/github-info.md"
-    protected-files: request_review
+create-pull-request:
+   title-prefix: "[mona] "
+   draft: true
+   fallback-as-issue: false
+tools:
+edit:
+web-fetch:
+network:
+allowed:
+   - github.com
+   - github.blog
 ---
 
-# Update GitHub Info
+# Update Mona's GitHub Info website
 
-Read [notes/mona-notes.md](notes/mona-notes.md) before making any changes.
+Read `notes/mona-notes.md` before making changes.
 
-Fetch the latest updates from:
+Use these sources:
+- `notes/mona-notes.md`
+- GitHub Blog: https://github.blog/latest/
+- GitHub Changelog: https://github.blog/changelog/
 
-- https://github.blog/latest/
-- https://github.blog/changelog/
+Update `site/content/github-info.md` with concise,
+practical updates for readers and include source context when content comes
+from the GitHub Blog or GitHub Changelog.
 
-Then update [site/content/github-info.md](site/content/github-info.md) with a short, practical summary for developers learning GitHub faster.
-
-When you add or revise an item based on the GitHub Blog or GitHub Changelog, mention that source in the entry.
-
-If there are no meaningful updates to publish, do not create a pull request. Emit `noop` instead.
-
-When the file is updated, use the safe-outputs `create-pull-request` mechanism so the changes are proposed in a pull request for Mona to review.
+Open a pull request for Mona to review. 
+Use a pull request title that mentions Mona or GitHub Info. 
+Do not write directly to `main`;
+rely on `safe-outputs` with `create-pull-request`.
